@@ -1,0 +1,62 @@
+// API chart data
+		work = Task.objects.filter(user=request.user, category='work').aggregate(Sum('time'))
+		study = Task.objects.filter(user=request.user, category='study').aggregate(Sum('time'))
+		sports = Task.objects.filter(user=request.user, category='sports').aggregate(Sum('time'))
+		social = Task.objects.filter(user=request.user, category='social').aggregate(Sum('time'))
+		fun = Task.objects.filter(user=request.user, category='fun').aggregate(Sum('time'))
+		errands = Task.objects.filter(user=request.user, category='errands').aggregate(Sum('time'))
+		self_dev = Task.objects.filter(user=request.user, category='self_dev').aggregate(Sum('time'))
+		sleep = Task.objects.filter(user=request.user, category='sleep').aggregate(Sum('time'))
+		proc = Task.objects.filter(user=request.user, category='proc').aggregate(Sum('time'))
+
+		if work['time__sum'] is None:
+			work['time__sum'] = timedelta(seconds=0)
+
+		if study['time__sum'] is None:
+			study['time__sum'] = timedelta(seconds=0)
+
+		if sports['time__sum'] is None:
+			sports['time__sum'] = timedelta(seconds=0)
+
+		if social['time__sum'] is None:
+			social['time__sum'] = timedelta(seconds=0)
+
+		if fun['time__sum'] is None:
+			fun['time__sum'] = timedelta(seconds=0)
+
+		if errands['time__sum'] is None:
+			errands['time__sum'] = timedelta(seconds=0)
+
+		if self_dev['time__sum'] is None:
+			self_dev['time__sum'] = timedelta(seconds=0)
+
+		if sleep['time__sum'] is None:
+			sleep['time__sum'] = timedelta(seconds=0)
+
+		if proc['time__sum'] is None:
+			proc['time__sum'] = timedelta(seconds=0)
+
+
+		data_set = [
+					work['time__sum']/60,
+					study['time__sum']/60,
+					sports['time__sum']/60,
+					social['time__sum']/60,
+					fun['time__sum']/60,
+					errands['time__sum']/60,
+					self_dev['time__sum']/60,
+					sleep['time__sum']/60,
+					proc['time__sum']/60,
+					]
+
+		percentage = [
+					work['time__sum']/total*100,
+					study['time__sum']/total*100,
+					sports['time__sum']/total*100,
+					social['time__sum']/total*100,
+					fun['time__sum']/total*100,
+					errands['time__sum']/total*100,
+					self_dev['time__sum']/total*100,
+					sleep['time__sum']/total*100,
+					proc['time__sum']/total*100,
+					]

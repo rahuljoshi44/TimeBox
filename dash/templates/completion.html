@@ -1,0 +1,108 @@
+{% extends 'dashboard.html' %}
+
+<script>
+{% block jquery %}
+var endpoint = '/Profile/api/productivity-data'
+var chartLabels = []
+var chartData = []
+
+$.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function(data){
+        var count = 0;
+        var len = data.data_set.length
+        while(count < len){
+            data.data_set[count] = data.data_set[count].toFixed(1);
+            count++
+        }
+        chartLabels = data.labels
+        chartData = data.data_set
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: '%',
+                    data: chartData,
+                    backgroundColor: [
+                        'rgba(115, 0, 181, 0.8)',
+                        'rgba(53, 177, 31, 0.8)',
+                        'rgba(216, 27, 96, 0.8)',
+                        'rgba(181, 0, 181, 0.8)',
+                        'rgba(25, 48, 189, 0.8)',
+                        'rgba(1, 111, 229, 0.8)',
+                        'rgba(0, 209, 255, 0.8)',
+                        'rgba(0, 184, 159, 0.8)',
+                        'rgba(67, 222, 13, 0.8)',
+                    ],
+                    borderColor: [
+                        'rgba(30, 215, 96, 1)',
+                        'rgba(115, 0, 181, 1)',
+                        'rgba(53, 177, 31, 1)',
+                        'rgba(216, 27, 96, 1)',
+                        'rgba(181, 0, 181, 1)',
+
+                        'rgba(25, 48, 189, 1)',
+                        'rgba(1, 111, 229, 1)',
+                        'rgba(0, 209, 255, 1)',
+                        'rgba(0, 184, 159, 1)',
+                        'rgba(67, 222, 13, 1)',
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+         });
+      },
+   })
+{% endblock %}
+</script>
+<!-- Top bar name -->
+{% block name %}
+    {{ name }}
+{% endblock %}
+
+<!-- Sidebar active -->
+{% block completion_class %}
+    active
+{% endblock %}
+
+{% block completion_style %}
+    background:#1DB954;
+    border-left: 7px solid green;
+{% endblock %}
+
+{% block join_date %}
+    {{ user.date_joined }}
+{% endblock %}
+
+{% block last_login %}
+    {{ user.last_login }}
+{% endblock %}
+
+
+<!-- Welcome -->
+{% block title %}
+    Completion of tasks over the week
+{% endblock %}
+
+
+<!-- Content -->
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <h5 class="text-center">Completion in % (Maximum = 100%)</h5>
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+{% endblock %}

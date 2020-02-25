@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Main landing -->
+<div class="row" style="margin-top:5vh;">
+  <div class="col-xl-5" style="background:transparent;margin-top:7%;">
+    <center style="margin-top:10%;">
+       <div class="Iam">
+         <b>
+         <span class="innerIam">
+            Study<br/>
+            Organize<br/>
+            Manage<br/>
+            Improve<br/>
+         </span>
+        </b>
+         <p>
+           &nbsp;Yourself.
+         </p>
+       </div>
+     </center>
+    <div class="lead" style="margin-top:40%;">
+      Time Box is an app based on the time boxing technique, that combines with it
+      analytic features for you to study how you spend your time.
+      <center style="margin-top:10%;">
+      <!-- Button trigger register modal -->
+        <button type="button" class="btn" style="background:#1DB954;color:white"
+                data-toggle="modal" data-target="#exampleModal">
+          Sign up now for free
+        </button>
+      </center>
+    </div>
+  </div>
+  <div class="col-xl-7">
+  {% load static %}
+  <img src="{% static 'dashboard-mockup-iphoneX.png' %}" class="img-fluid"
+  style="max-width: 100%;height: auto;" data-aos="fade-down" data-aos-duration="1600">
+  </div>
+</div>
+
+<!-- Features -->
+<div class="row" id="features">
+   <div class="col-xl-12" style="margin-top:7vh">
+    <center data-aos="fade-up" data-aos-duration="1000"><h1>
+      <i class="fas fa-bolt" style="color:#1DB954"></i>&nbsp; Features
+    </h1></center>
+  </div>
+</div>
+<div class="row" data-aos="fade-up" data-aos-duration="1000" style="margin-top:5%;">
+  <div class="col-xl-4 feature-card">
+    <div class="card mb-3" style="background:transparent;">
+      <div class="card-body text-white">
+        <center class="card-title" style="color:#1DB954">
+          <h2>
+          <i class="fas fa-list-ol"></i>&nbsp; Plan your day
+          </h2>
+        </center>
+        <p class="card-text">Plan and crush your day by listing out all your tasks to tackle.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 feature-card">
+    <div class="card mb-3" style="background:transparent">
+      <div class="card-body text-white">
+        <center class="card-title" style="color:#1DB954">
+          <h2>
+            <i class="fas fa-flag-checkered"></i>&nbsp; Set goals
+          </h2>
+        </center>
+        <p class="card-text">Develop yourself by setting goals with set deadlines.</p>
+      </div>
+    </div>
+  </div>
+    <div class="col-xl-4 feature-card">
+    <div class="card mb-3" style="background:transparent;">
+      <div class="card-body text-white">
+        <center class="card-title">
+          <h2 style="color:#1DB954">
+            <i class="fas fa-clipboard"></i>&nbsp; Create Subtasks
+          </h2>
+        </center>
+        <p class="card-text">Breakdown your goals with subtasks that you can add to your day's list.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" style="margin-top:2%" data-aos="fade-up" data-aos-duration="1000">
+  <div class="col-xl-4 feature-card">
+    <div class="card mb-3" style="background:transparent;">
+      <div class="card-body text-white">
+        <center class="card-title" style="color:#1DB954">
+          <h2>
+            <i class="far fa-chart-bar"></i>&nbsp; Categories
+          </h2>
+        </center>
+        <p class="card-text">Categorize your tasks and find out how much time you spend on each one.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 feature-card">
+    <div class="card mb-3" style="background:transparent">
+      <div class="card-body text-white">
+        <center class="card-title" style="color:#1DB954">
+          <h2>
+            <i class="fas fa-chart-line"></i>&nbsp; Completion
+          </h2>
+        </center>
+        <p class="card-text">Hold yourself accountable to your tasks and view your progress over days.</p>
+      </div>
+    </div>
+  </div>
+    <div class="col-xl-4 feature-card">
+    <div class="card mb-3" style="background:transparent;">
+      <div class="card-body text-white">
+        <center class="card-title">
+          <h2 style="color:#1DB954">
+            <i class="fas fa-file-alt"></i>&nbsp; Reports
+          </h2>
+        </center>
+        <p class="card-text">Breakdown your goals with subtasks that you can add to your day's list.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mac -->
+<div class="row">
+   <div class="col-xl-12" data-aos="fade-up" data-aos-duration="1000"
+  data-aos-offset="400">
+      {% load static %}
+      <img src="{% static 'mockup-macbook.png' %}" class="img-fluid"
+      style="display:block;margin-top:-15%">
+  </div>
+</div>
+
+<!-- Reason -->
+<div class="row" id="about" style="margin-top:-10%;" data-aos="fade-up" data-aos-duration="1000">
+  <div class="col-xl-4">
+    <center>
+      <h1 >
+        <i class="fas fa-check feature-card" style="color:#1DB954"></i> Easy to use.
+      </h1>
+      <div class="lead">
+        Time Box was made to be easy and simple to use for your everyday time management needs.
+      </div>
+    </center>
+  </div>
+  <div class="col-xl-4">
+    <center>
+      <h1 >
+        <i class="fas fa-check feature-card" style="color:#1DB954"></i> Completely free.
+      </h1>
+      <div class="lead">
+        No payement or subscription needed. Get started now for free!
+      </div>
+    </center>
+  </div>
+  <div class="col-xl-4">
+    <center>
+      <h1 >
+        <i class="fas fa-check feature-card" style="color:#1DB954"></i> Responsive
+      </h1>
+      <div class="lead">
+        Time Box provides the best experience on desktop, but still looks great
+        on every device.
+      </div>
+    </center>
+  </div>
+</div>
+<div class="row" data-aos="fade-up" data-aos-duration="1000" style="margin-bottom:15%;">
+    <div class="col-xl-12">
+    <center>
+      <button type="button" class="btn btn-lg" style="background:#1DB954;color:white;margin-top:5%"
+                data-toggle="modal" data-target="#exampleModal">
+          Sign up now for free.
+      </button>
+    </center>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-white" style="background:#111311">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:#1DB954">
+          <i class="fas fa-users"></i>&nbsp; Sign up now for free!
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:white">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-user"></i></div>
+              </div>
+              {{ form.first_name }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fab fa-fort-awesome"></i></div>
+              </div>
+              {{ form.last_name }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-id-card-alt"></i></div>
+              </div>
+              {{ form.username }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-key"></i></div>
+              </div>
+              {{ form.password }}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-envelope"></i></div>
+              </div>
+            {{ form.email }}
+            </div>
+            <div id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</div>
+          </div>
+          <hr color="white">
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </form>
+    <p>Already have an account? Log in <a href="login">here</a>.</p>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+<!-- Footer -->
+{% block footer %}
+<div class="row" style="background:#111311">
+  <div class="container">
+    <center>
+      Designed and developed with &nbsp;<i class="fas fa-heart" style="color:#1DB954"></i> &nbsp;by Rahul Joshi
+    </center>
+  </div>
+</div>
+
+{% endblock %}

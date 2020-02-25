@@ -1,0 +1,75 @@
+/* Rotating Text */
+.Iam {
+  font: normal 50px/70px Montserrat, 'Nunito';
+  color: white;
+  position:relative;
+}
+.Iam p {
+  height: 70px;
+  float: left;
+}
+.Iam b {
+  float: left;
+  overflow: hidden;
+  position: relative;
+  height: 70px;
+}
+.Iam .innerIam {
+  display: inline-block;
+  color: #1DB954;
+  position: relative;
+  white-space: nowrap;
+  top: 0;
+  left: 0;
+/*animation*/
+-webkit-animation:move 5s;
+   -moz-animation:move 5s;
+    -ms-animation:move 5s;
+     -o-animation:move 5s;
+        animation:move 5s;
+/*animation-iteration-count*/
+-webkit-animation-iteration-count:infinite;
+   -moz-animation-iteration-count:infinite;
+    -ms-animation-iteration-count:infinite;
+     -o-animation-iteration-count:infinite;
+        animation-iteration-count:infinite;
+/*animation-delay*/
+-webkit-animation-delay:1s;
+   -moz-animation-delay:1s;
+    -ms-animation-delay:1s;
+     -o-animation-delay:1s;
+        animation-delay:1s;
+}
+@keyframes move{
+0%  { top: 0px; }
+20% { top: -70px; }
+40% { top: -140px; }
+60% { top: -210px; }
+}
+
+@-webkit-keyframes move {
+    0%  { top: 0px; }
+    20% { top: -70px; }
+    40% { top: -140px; }
+    60% { top: -210px; }
+}
+@-moz-keyframes move {
+    0%  { top: 0px; }
+    20% { top: -70px; }
+    40% { top: -140px; }
+    60% { top: -210px; }
+}
+@-o-keyframes move {
+    0%  { top: 0px; }
+    20% { top: -70px; }
+    40% { top: -140px; }
+    60% { top: -210px; }
+}
+@keyframes move {
+    0%  { top: 0px; }
+    20% { top: -70px; }
+    40% { top: -140px; }
+    60% { top: -210px; }
+}
+/* Append this: 80% { top: -280px; } at the end of keyframe to extend */
+

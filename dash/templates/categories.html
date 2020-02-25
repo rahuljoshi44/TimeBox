@@ -1,0 +1,165 @@
+{% extends 'dashboard.html' %}
+
+
+<script type="text/javascript">
+{% block jquery %}
+var endpoint = '/Profile/api/category-data'
+var chartLabels = []
+var chartData = []
+
+$.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function(data){
+        console.log(data)
+        chartLabels = data.labels
+        chartData = data.data_set
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: '# of Minutes',
+                    data: chartData,
+                    backgroundColor: [
+                        'rgba(229, 57, 53, 0.8)',
+                        'rgba(216, 27, 96, 0.8)',
+                        'rgba(181, 0, 181, 0.8)',
+                        'rgba(115, 0, 181, 0.8)',
+                        'rgba(25, 48, 189, 0.8)',
+                        'rgba(1, 111, 229, 0.8)',
+                        'rgba(0, 209, 255, 0.8)',
+                        'rgba(0, 184, 159, 0.8)',
+                        'rgba(67, 222, 13, 0.8)',
+                    ],
+                    borderColor: [
+                        'rgba(229, 57, 53, 1)',
+                        'rgba(216, 27, 96, 1)',
+                        'rgba(181, 0, 181, 1)',
+                        'rgba(115, 0, 181, 1)',
+                        'rgba(25, 48, 189, 1)',
+                        'rgba(1, 111, 229, 1)',
+                        'rgba(0, 209, 255, 1)',
+                        'rgba(0, 184, 159, 1)',
+                        'rgba(67, 222, 13, 1)',
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        chartLabels1 = data.labels
+        chartData1 = data.percentage
+        var count = 0;
+        var len = data.percentage.length
+        while(count < len){
+            data.percentage[count] = data.percentage[count].toFixed(1);
+            count++
+        }
+        var ctx1 = document.getElementById('pieChart');
+        var pieChart = new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: chartLabels1,
+                datasets: [{
+                    label: '# %',
+                    data: chartData1,
+                    backgroundColor: [
+                        'rgba(229, 57, 53, 0.75)',
+                        'rgba(216, 27, 96, 0.75)',
+                        'rgba(181, 0, 181, 0.75)',
+                        'rgba(115, 0, 181, 0.75)',
+                        'rgba(25, 48, 189, 0.75)',
+                        'rgba(1, 111, 229, 0.75)',
+                        'rgba(0, 209, 255, 0.75)',
+                        'rgba(0, 184, 159, 0.75)',
+                        'rgba(67, 222, 13, 0.75)',
+                    ],
+                    borderColor: [
+
+                        'rgba(229, 57, 53, 1)',
+                        'rgba(216, 27, 96, 1)',
+                        'rgba(181, 0, 181, 1)',
+                        'rgba(115, 0, 181, 1)',
+                        'rgba(25, 48, 189, 1)',
+                        'rgba(1, 111, 229, 1)',
+                        'rgba(0, 209, 255, 1)',
+                        'rgba(0, 184, 159, 1)',
+                        'rgba(67, 222, 13, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    },
+})
+{% endblock %}
+</script>
+
+<!-- Top bar name -->
+{% block name %}
+    {{ name }}
+{% endblock %}
+
+<!-- Sidebar active -->
+{% block categories_class %}
+    active
+{% endblock %}
+
+
+<!-- Welcome -->
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block category_style %}
+    background:#1DB954;
+    border-left: 7px solid green;
+{% endblock %}
+
+{% block join_date %}
+    {{ user.date_joined }}
+{% endblock %}
+
+{% block last_login %}
+    {{ user.last_login }}
+{% endblock %}
+<!-- Export option -->
+{% block options %}
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <div class="row">
+        <div class="col-xl-12">
+            <h5 class="text-center">Time spent on each category (today)</h5>
+            <canvas id="myChart"></canvas>
+        </div>
+    </div><br><br><br>
+    <div class="row">
+        <div class="col-xl-12">
+            <h5 class="text-center">Percentage distribution over the last 7 days.</h5>
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div><br><br>
+{% endblock %}

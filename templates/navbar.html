@@ -1,0 +1,40 @@
+{% block navbar %}
+
+<nav class="navbar navbar-expand-lg fixed-top" style="background:transparent">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center"
+     href='#main' style="color:#1DB954">
+    <div class="sidebar-brand-icon">
+      {% load static %}
+      <img src="{% static 'logo2.svg' %}" height="50px">
+    </div>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars" style="color:white"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/Home" style="color:white;">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#features" style="color:white">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#about" style="color:white">About&nbsp;</a>
+      </li>
+    </ul>
+    <span class="navbar-text">
+      <a href="login" class="btn" style="color:#1DB954">Login&nbsp;</a>
+    </span>
+    <span class="navbar-text">
+      <button type="button" class="btn" style="border:1px solid #1DB954;color:#1DB954;"
+                data-toggle="modal" data-target="#exampleModal">
+          Register
+        </button>
+    </span>
+  </div>
+
+</nav>
+
+{% endblock %}

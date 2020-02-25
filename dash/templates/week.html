@@ -1,0 +1,358 @@
+{% extends 'dashboard.html' %}
+
+{% block name %}
+    {{ name }}
+{% endblock %}
+
+<!-- Sidebar active -->
+{% block week_class %}
+    active
+{% endblock %}
+
+{% block week_style %}
+    background:#1DB954;
+    border-left: 7px solid green;
+{% endblock %}
+
+<!-- Welcome -->
+{% block title %}
+    Your Goals
+{% endblock %}
+
+{% block join_date %}
+    {{ user.date_joined }}
+{% endblock %}
+
+{% block last_login %}
+    {{ user.last_login }}
+{% endblock %}
+
+
+
+<!-- Export option -->
+{% block options %}
+<div class="d-sm-inline-block">
+    <!-- Trigger Modal -->
+    <button class="btn btn-primary shadow-sm waves-effect waves-blue"
+            data-toggle="modal" data-target="#goalModal">
+        <i class="fas fa-bullseye fa-sm"></i> &nbsp;Set a Goal
+    </button>&nbsp;&nbsp;
+</div>
+
+{% endblock %}
+
+
+{% block js %}
+$('#addSubTaskModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var data = button.data('whatever')
+  var modal = $(this)
+  modal.find('.modal-title').text('Add Subtask')
+  modal.find('#goalID').val(data)
+})
+
+$('#appendSubTaskModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var data = button.data('stuff')
+  var modal = $(this)
+  modal.find('.modal-body #subTaskID').val(data)
+})
+
+$('#goalDeleteModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var data = button.data('goal') // Extract info from data-* attributes
+  var modal = $(this)
+  modal.find('.modal-body #delGoalID').val(data)
+})
+
+
+{% endblock %}
+
+
+
+<!-- Content -->
+{% block content %}
+
+<!-- Set Goal Modal -->
+<div class="modal fade" id="goalModal" tabindex="-1" role="dialog"
+     aria-labelledby="goalModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-white" style="background:#1F231F">
+      <div class="modal-header">
+        <h5 class="modal-title" id="goalModalLabel" style="color:#1DB954">Set a goal for this week.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:white">&times;</span>
+        </button>
+      </div>
+      <form action="" method="post">
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="form-group">
+                <label>Title:&nbsp;&nbsp;</label>
+                {{ form.title }}
+            </div>
+            <div class="form-group">
+                <label>Description:</label><br>
+                {{ form.description }}
+            </div>
+         </div>
+          <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                  Cancel
+              </button>
+              <button type="submit" class="btn btn-primary waves-effect waves-blue">
+                    <i class="fas fa-plus fa-sm"></i> Add
+              </button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+<!-- Delete Goal Modal -->
+<div class="modal fade" id="goalDeleteModal" tabindex="-1" role="dialog"
+     aria-labelledby="goalDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-white" style="background:#1F231F">
+      <div class="modal-header">
+        <h5 class="modal-title" id="goalDeleteModalLabel" style="color:#1DB954">
+            Confirm Deletion of Goal
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:white">&times;</span>
+        </button>
+      </div>
+      <form action="week/delete/goal" method="post">
+        {% csrf_token %}
+        <div class="modal-body">
+          Are you sure you want to delete this goal?<br>Deleting this goal will also delete
+          all the sub-tasks of this goal.
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="delGoalID" name="id">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancel
+          </button>
+           <button type="submit" class="btn btn-danger">
+               <i class="fas fa-times"></i>&nbsp;Delete
+           </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+<!-- Finish Goal Modal -->
+<div class="modal fade" id="goalFinishModal" tabindex="-1" role="dialog"
+     aria-labelledby="goalFinishModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="goalFinishModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+
+<!-- Goals for this week -->
+<div class="row">
+    {% for goal in goals %}
+        <div class="col-xl-6" style="margin-bottom:25px">
+            <div class="card" style="background:#1F231F;">
+                <div class="card-body text-white">
+                    <h6 class="text-danger" style="font-size:13px">
+                        <i class="fas fa-clock"></i>
+                        Expires on {{ goal.expiry }}
+                    </h6>
+                    <h2 class="card-title"><i class="fas fa-mountain"></i> {{ goal.title }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted" style="padding-bottom:5%">{{ goal.description }}</h6>
+                    <button type="button" class="btn btn-primary waves-effect waves-blue" data-toggle="modal"
+                            data-target="#addSubTaskModal" data-whatever="{{ goal.id }}">
+                        <i class="fas fa-plus"></i>&nbsp;Add Subtask
+                    </button>
+                    &emsp;&emsp;&emsp;&emsp;&emsp;
+                    <button type="button" class="btn btn-success waves-effect waves-green" data-toggle="modal"
+                            data-target="#goalFinishModal" data-finish="{{ goal.id }}">
+                        <i class="fas fa-flag-checkered"></i>&nbsp;Finish
+                    </button>
+                    &nbsp;
+                    <button type="button" class="btn btn-danger waves-effect waves-red" data-toggle="modal"
+                            data-target="#goalDeleteModal" data-goal="{{ goal.id }}">
+                        <i class="fas fa-times"></i>&nbsp;Delete Goal
+                    </button>
+                    {% if goal.subtask_set.count != 0 %}
+                    <hr color="white">
+                      <div class="col-xl-11 table-responsive">
+                        <table class="table table-hover text-white table-borderless" bgcolor="#1F231F"
+                        style="border-radius:20px;border-collapse:separate">
+                          <thead>
+                            <tr>
+                              <th scope="col">Task</th>
+                              <th scope="col">Add to list</th>
+                              <th scope="col">&emsp;Delete</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for subtask in subtasks %}
+                                {% if subtask.goal == goal %}
+                                <tr>
+                                  <td> {{ subtask.task }} </td>
+                                  {% if subtask.status == 'PN' %}
+                                  <td>&emsp;
+                                      <button type="button" data-toggle="modal" data-target="#appendSubTaskModal"
+                                              data-stuff="{{ subtask.id }}"
+                                              class="btn btn-outline-success waves-effect waves-green">
+                                      <i class="fas fa-plus"></i>
+                                      </button>
+                                  </td>
+                                  <td>&emsp;
+                                      <a href="week/task/delete/{{ subtask.id }}"
+                                         class="btn btn-outline-danger waves-effect waves-red">
+                                      <i class="fas fa-backspace"></i>
+                                      </a>
+                                  </td>
+                                  {% elif subtask.status == 'IP' %}
+                                  <td colspan="2"><!-- #1F68F2 -->
+                                    <div style="display:inline-block;color:#407BEB" class="align-top">
+                                        <b>&emsp;&emsp;In Progress</b>
+                                    </div>
+                                    <div class="spinner" style="display: inline-block">
+                                      <div class="rect1"></div>
+                                      <div class="rect2"></div>
+                                      <div class="rect3"></div>
+                                      <div class="rect4"></div>
+                                      <div class="rect5"></div>
+                                    </div>
+                                  </td>
+                                  {% elif subtask.status == 'CP' %}
+                                  <td colspan="2" style="color:#1DB954">&emsp;&emsp;
+                                     <b>Completed&nbsp; <i class="fas fa-check"></i></b>
+                                  </td>
+                                  {% endif %}
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Add to list subtask Modal -->
+<div class="modal fade" id="appendSubTaskModal" tabindex="-1" role="dialog"
+     aria-labelledby="appendSubTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background:#1F231F">
+      <div class="modal-header">
+        <h5 class="modal-title" id="appendSubTaskModalLabel" style="color:#1DB954">
+            Add Sub-task to Today's list
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:white">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="week/task/append" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="time" class="col-form-label">Time:</label>
+            <input type="number" class="form-control" id="time" name="time">
+          </div>
+          <div class="form-group">
+            <label for="priorityFormControlSelect">Priority</label>
+            <select class="form-control" id="priorityFormControlSelect" name="priority">
+              <option value=3>High</option>
+              <option value=2>Medium</option>
+              <option value=1>Low</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="categoryFormControlSelect">Category</label>
+            <select class="form-control" id="categoryFormControlSelect" name="category">
+              <option value="work">Work</option>
+              <option value="study">Study</option>
+              <option value="sports">Sports & Fitness</option>
+              <option value="social">Social</option>
+              <option value="fun">Fun</option>
+              <option value="errands">Errands</option>
+              <option value="self_dev">Self Development</option>
+              <option value="sleep">Sleep/Rest</option>
+              <option value="proc">Procrastination</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="subTaskID" name="subtask">
+          </div>
+            <hr color="white">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+<!-- Add Subtask Modal -->
+<div class="modal fade" id="addSubTaskModal" tabindex="-1" role="dialog"
+     aria-labelledby="addSubTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background:#1F231F">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addSubTaskModalLabel" style="color:#1DB954"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:white">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="week/add/subtask">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="task" class="col-form-label">Task:</label>
+            <input class="form-control" id="task" name="task" required>
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="goalID" name="goal">
+          </div>
+          <hr color="white" style="margin-top:5%">
+          <button type="submit" class="btn btn-primary waves-effect waves-blue">Add</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+{% endblock %}

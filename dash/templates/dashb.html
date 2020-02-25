@@ -1,0 +1,115 @@
+{% extends 'dashboard.html' %}
+
+<!-- Top bar name -->
+{% block name %}
+    {{ name }}
+{% endblock %}
+
+<!-- Sidebar active -->
+{% block dash_class %}
+    active
+{% endblock %}
+
+{% block dash_style %}
+    background:#1DB954;
+    border-left: 7px solid green;
+    <!--border-top-right-radius: 25px;-->
+    <!--border-bottom-right-radius: 25px;-->
+{% endblock %}
+
+{% block join_date %}
+    {{ user.date_joined }}
+{% endblock %}
+
+{% block last_login %}
+    {{ user.last_login }}
+{% endblock %}
+
+
+<!-- Welcome -->
+{% block title %}
+    Welcome, {{ user.first_name }}. {{ a }}
+{% endblock %}
+
+
+<!-- Content -->
+{% block content %}
+<br />
+<div class="row">
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card waves-effect waves-green" style="background:#111311;border:1px solid #1DB954">
+            <div class="card-body text-white">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-uppercase mb-1">
+                      Number of tasks completed today:&emsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold">{{ tasks }}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-check fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card waves-effect waves-green" style="background:#111311;border:1px solid #1DB954">
+            <div class="card-body text-white">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-uppercase mb-1">
+                      Number of Tasks remaining for today:&nbsp;&nbsp;
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold">{{ rem_tasks }}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card waves-effect waves-green" style="background:#111311;border:1px solid #1DB954">
+            <div class="card-body text-white">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-uppercase mb-1">
+                      Number of remaining weekly goals:&emsp;&nbsp;
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold">{{ rem_goals }}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-bullseye fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card waves-effect waves-green" style="background:#111311;border:1px solid #1DB954">
+            <div class="card-body text-white">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-uppercase mb-1">
+                      Average completion over last 7 days:
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold">{{ completion|floatformat:"2" }}%</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+

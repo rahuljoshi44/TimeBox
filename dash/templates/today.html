@@ -1,0 +1,276 @@
+{% extends 'dashboard.html' %}
+
+<!-- Top bar name -->
+{% block name %}
+    {{ name }}
+{% endblock %}
+
+
+<!-- Sidebar active -->
+{% block today_class %}
+    active
+{% endblock %}
+
+<!-- Welcome -->
+{% block title %}
+    Today's Tasks
+{% endblock %}
+
+{% block today_style %}
+    background:#1DB954;
+    border-left: 7px solid green;
+{% endblock %}
+
+{% block join_date %}
+    {{ user.date_joined }}
+{% endblock %}
+
+{% block last_login %}
+    {{ user.last_login }}
+{% endblock %}
+
+
+<!-- Excess options -->
+{% block options %}
+<div class="d-sm-inline-block">
+    <!-- Trigger Modal -->
+    <button class="btn btn-primary shadow-sm waves-effect waves-blue"
+            data-toggle="modal" data-target="#exampleModal">
+        <i class="fas fa-plus fa-sm"></i> Add a Task
+    </button>&nbsp;&nbsp;
+</div>
+{% endblock %}
+
+{% block modal %}
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-white" style="background:#1F231F">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:#1DB954">Add a task.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color:white">&times;</span>
+        </button>
+      </div>
+      <form action="" method="post">
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="form-group">
+                <label>Title:&nbsp;&nbsp;</label>
+                {{ form.task }}
+            </div>
+            <div class="form-group">
+                <label>Time (minutes):&nbsp;&nbsp;</label>
+                {{ form.time }}
+            </div>
+            <div class="form-group">
+                <label>Priority:&nbsp;&nbsp;</label>
+                {{ form.priority }}
+            </div>
+            <div class="form-group">
+                <label>Category:&nbsp;&nbsp;</label>
+                {{ form.category }}
+            </div>
+         </div>
+          <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                  Cancel
+              </button>
+              <button type="submit" class="btn btn-primary waves-effect waves-blue">
+                    <i class="fas fa-plus fa-sm"></i> Add
+              </button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+<!-- Content Row -->
+<div class="row">
+    <!-- Tasks for the day -->
+    <div class="col-xl-11 table-responsive">
+        <table class="table table-hover text-white table-borderless" bgcolor="#1F231F"
+        style="border-radius:20px;border-collapse:separate">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Task</th>
+              <th scope="col">Time</th>
+              <th scope="col">Priority</th>
+              <th scope="col">Complete</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>
+                  {% if task.category == 'work' %}
+                    <i class="fas fa-briefcase"></i>
+                  {% elif task.category == 'study' %}
+                    <i class="fas fa-book-open"></i>
+                  {% elif task.category == 'sports' %}
+                    <i class="fas fa-running"></i>
+                  {% elif task.category == 'social' %}
+                    <i class="fas fa-cocktail"></i>
+                  {% elif task.category == 'fun' %}
+                    <i class="fas fa-gamepad"></i>
+                  {% elif task.category == 'errands' %}
+                    <i class="fas fa-car-side"></i>
+                  {% elif task.category == 'self_dev' %}
+                    <i class="fas fa-brain"></i>
+                  {% elif task.category == 'sleep' %}
+                    <i class="fas fa-moon"></i>
+                  {% elif task.category == 'proc' %}
+                    <i class="fas fa-pause"></i>
+                  {% endif %}
+                  &nbsp;&nbsp;{{ task.task }}
+              </td>
+              <td>{{ task.time }}</td>
+              <td>
+                  {% if task.priority == 3 %}
+                    <i class="fas fa-circle" style="color:#FFD700"></i>&emsp;High
+                  {% elif task.priority == 2 %}
+                    <i class="fas fa-circle" style="color:#C0C0C0"></i>&emsp;Medium
+                  {% elif task.priority == 1 %}
+                    <i class="fas fa-circle" style="color:#cd7f32"></i>&emsp;Low
+                  {% endif %}
+              </td>
+              <td>
+                  <a href="today/complete/{{ task.id }}" class="btn btn-outline-success">
+                  <i class="fas fa-check" ></i>
+                  </a>
+              </td>
+              <td>
+                  <a href="today/delete/{{ task.id }}" class="btn btn-outline-danger">
+                  <i class="fas fa-times"></i>
+                  </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div><br>
+
+<!-- Content Row -->
+<div class="row">
+    <!-- Completed Tasks -->
+    <div class="col-xl-7">
+        <h4>Completed Tasks</h4>
+        <table class="table table-hover text-white table-borderless" bgcolor="#1F231F"
+        style="border-radius:20px">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Task</th>
+              <th scope="col">Time</th>
+              <th scope="col">Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in completed %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{% if task.category == 'work' %}
+                    <i class="fas fa-briefcase"></i>
+                  {% elif task.category == 'study' %}
+                    <i class="fas fa-book-open"></i>
+                  {% elif task.category == 'sports' %}
+                    <i class="fas fa-running"></i>
+                  {% elif task.category == 'social' %}
+                    <i class="fas fa-cocktail"></i>
+                  {% elif task.category == 'fun' %}
+                    <i class="fas fa-gamepad"></i>
+                  {% elif task.category == 'errands' %}
+                    <i class="fas fa-car-side"></i>
+                  {% elif task.category == 'self_dev' %}
+                    <i class="fas fa-brain"></i>
+                  {% elif task.category == 'sleep' %}
+                    <i class="fas fa-moon"></i>
+                  {% elif task.category == 'proc' %}
+                    <i class="fas fa-pause"></i>
+                  {% endif %}
+                  &nbsp;&nbsp;{{ task.task }}
+              </td>
+              <td>{{ task.time }}</td>
+              <td>
+                  {% if task.priority == 3 %}
+                    <i class="fas fa-circle" style="color:#FFD700"></i>&emsp;High
+                  {% elif task.priority == 2 %}
+                    <i class="fas fa-circle" style="color:#C0C0C0"></i>&emsp;Medium
+                  {% elif task.priority == 1 %}
+                    <i class="fas fa-circle" style="color:#cd7f32"></i>&emsp;Low
+                  {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+
+    <!-- Category Index -->
+    <div class="col-xl-5">
+        <h4>Category Index</h4>
+        <table class="table table-hover text-white table-borderless" bgcolor="#1F231F"
+        style="border-radius:20px">
+            <tbody>
+                <tr>
+                    <td><i class="fas fa-briefcase"></i></td>
+                    <td>Work</td>
+                    <td>Jobs, Internships and other work-related commitments.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-book-open"></i></td>
+                    <td>Study</td>
+                    <td>School & Work related study.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-running"></i></td>
+                    <td>Sports & Fitness</td>
+                    <td>Health and Fitness related activities.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-cocktail"></i></td>
+                    <td>Social</td>
+                    <td>Social Activities with friends and colleagues.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-gamepad"></i></td>
+                    <td>Fun</td>
+                    <td>Leisurely activities to chill out during breaks.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-car-side"></i></td>
+                    <td>Errands</td>
+                    <td>Includes daily activities and other chores.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-brain"></i></td>
+                    <td>Self Development</td>
+                    <td>Activities to develop your mind such as reading, meditating, etc.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-moon"></i></td>
+                    <td>Sleep/Rest</td>
+                    <td>Night sleeps & day naps. Use it to record how much you sleep.</td>
+                </tr>
+                <tr>
+                    <td><i class="fas fa-pause"></i></td>
+                    <td>Procrastination</td>
+                    <td>Wasted time.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

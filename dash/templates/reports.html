@@ -1,0 +1,62 @@
+{% extends 'dashboard.html' %}
+
+<!-- Top bar name -->
+{% block name %}
+    {{ name }}
+{% endblock %}
+
+<!-- Sidebar active -->
+{% block reports_class %}
+    active
+{% endblock %}
+
+{% block title %}
+    <i class="fas fa-file-download"></i> &nbsp;Download Reports
+{% endblock %}
+
+{% block reports_style %}
+    background:#1DB954;
+    border-left: 7px solid green;
+{% endblock %}
+
+{% block join_date %}
+    {{ user.date_joined }}
+{% endblock %}
+
+{% block last_login %}
+    {{ user.last_login }}
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+
+    <div class="row">
+        <div class="col-xl-3"></div>
+        <div class="col-xl-6 table-responsive">
+             <table class="table table-hover text-white table-borderless" bgcolor="#1F231F"
+             style="border-radius:20px;border-collapse:separate">
+               <thead>
+                 <tr>
+                   <th scope="col">#</th>
+                   <th scope="col"> Date</th>
+                   <th scope="col"> Download PDF</th>
+                 </tr>
+               </thead>
+               <tbody>
+               {% for date in dates %}
+               <tr>
+                   <th scope="row">{{ forloop.counter }}</th>
+                   <td><i class="fas fa-calendar-day"></i> &nbsp;{{ date }}</td>
+                   <td>
+                       <a href="reports/pdf/{{ forloop.counter }}" class="btn btn-primary">
+                           <i class="fas fa-file-download"></i> &nbsp;Download
+                       </a>
+                   </td>
+               </tr>
+               {% endfor %}
+               </tbody>
+             </table>
+        </div>
+        <div class="col-xl-3"></div>
+    </div>
+{% endblock %}
