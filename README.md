@@ -1,5 +1,7 @@
 # TimeBox
+<p align="center">
   <img src="demo/intro.gif" height=400px>
+</p>
 
 ## What can TimeBox do?
 
