@@ -5,7 +5,7 @@
 
 ### Set weekly goals
 Use TimeBox to set your goals for the week. You can even add subtasks within goals to keep track of your progess.
-<img src="demo/goals.png" style="box-shadow: 3px 3px 1px #ccc; height=100px">
+<img src="demo/goals.png" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" height=100px>
 ### Manage daily tasks
 Create and manage a list of tasks to complete in the day. Categorise the tasks by type and priority and decide how much time you'll spend on each of them.
 <img src="demo/today.png">
