@@ -46,9 +46,9 @@ View the percentage of tasks you completed for each day over the past week. This
 Study the different places you spend your time over the day. TimeBox groups each completed task by category and sums up all minutes you spend on them to create a graph that shows how much time was spent on each category of tasks.<br />
 <p align="center">
   <img src="demo/category1.png" height=400px>
-</p> <br />
-You can even see how much time you spent on each category over the entire week.<br />
-<p align="center">
+</p>
+You can even see how much time you spent on each category over the entire week.
+<p align="center"><br />
   <img src="demo/category2.png" height=400px>
 </p>
 
