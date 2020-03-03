@@ -48,7 +48,7 @@ Study the different places you spend your time over the day. TimeBox groups each
   <img src="demo/category1.png" height=400px>
 </p> <br />
 You can even see how much time you spent on each category over the entire week.<br />
-<p>
+<p align="center">
   <img src="demo/category2.png" height=400px>
 </p>
 
