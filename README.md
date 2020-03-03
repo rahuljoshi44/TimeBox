@@ -1,4 +1,7 @@
 # TimeBox
+<p>
+TimeBox is a task management app with data analysis features, inspired by the "screen time" feature of iOS. It was created using django and the django rest framework. The UI utlizes libraries such as chart.js and boostrap.
+</p>
 <p align="center">
   <img src="demo/intro.gif" height=400px>
 </p>
@@ -7,6 +10,9 @@
 
 ### Set weekly goals
 Use TimeBox to set your goals for the week. You can even add subtasks within goals to keep track of your progess.
+- Set goals that expire within the week if not completed.
+- Create subtasks within each goal to track your progress.
+- Subtasks can be added to your daily task list to complete.
 <p align="center">
   <img src="demo/goals.png" height=400px class="shadow">
 </p>
